@@ -1,6 +1,6 @@
 package com.alicankustemur.login.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.alicankustemur.login.model.User;
 
@@ -10,18 +10,16 @@ import com.alicankustemur.login.model.User;
  * @File : DAO.java
  * @Blog : https://kustemura.blogspot.com.tr
  */
-public interface DAO {
+public interface IUserDAO {
 
 	void createUser(User user);
 
-	void updateUser(User user, int userId);
+	void updateUser(User user, long userId);
 
-	void deleteUser(int userId);
+	void deleteUser(long userId);
 
-	User getUserById(int id);
+	User getUserById(long userId);
 
-	ArrayList<User> getAllUsers();
-
-	String validate(String userName, String userPass);
+	List<User> getAllUsers();
 
 }

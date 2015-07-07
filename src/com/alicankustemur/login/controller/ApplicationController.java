@@ -1,8 +1,8 @@
 package com.alicankustemur.login.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import com.alicankustemur.login.dao.DAO;
+import com.alicankustemur.login.dao.IUserDAO;
 import com.alicankustemur.login.model.User;
 
 /**
@@ -12,17 +12,17 @@ import com.alicankustemur.login.model.User;
  * @Blog : https://kustemura.blogspot.com.tr
  */
 public class ApplicationController {
-	private DAO dao;
+	public IUserDAO dao;
 
-	public ApplicationController(final DAO dao) {
+	public ApplicationController(final IUserDAO dao) {
 		this.dao = dao;
 	}
 
-	public DAO getDao() {
+	public IUserDAO getDao() {
 		return dao;
 	}
 
-	public void setDao(final DAO dao) {
+	public void setDao(final IUserDAO dao) {
 		this.dao = dao;
 	}
 
@@ -30,24 +30,20 @@ public class ApplicationController {
 		dao.createUser(user);
 	}
 
-	public void updateUser(final User user, final int userId) {
+	public void updateUser(final User user, final long userId) {
 		dao.updateUser(user, userId);
 	}
 
-	public void deleteUser(final int userId) {
+	public void deleteUser(final long userId) {
 		dao.deleteUser(userId);
 	}
 
-	public User getUserById(final int userId) {
+	public User getUserById(final long userId) {
 		return dao.getUserById(userId);
 	}
 
-	public ArrayList<User> getAllUsers() {
+	public List<User> getAllUsers() {
 		return dao.getAllUsers();
-	}
-
-	public String validate(final String userName, final String userPass) {
-		return dao.validate(userName, userPass);
 	}
 
 }

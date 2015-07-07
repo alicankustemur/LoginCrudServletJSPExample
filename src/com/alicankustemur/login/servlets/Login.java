@@ -1,7 +1,7 @@
 package com.alicankustemur.login.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alicankustemur.login.controller.UserValidator;
 import com.alicankustemur.login.dao.JDBC_Dao;
 import com.alicankustemur.login.model.User;
 
@@ -22,6 +23,7 @@ import com.alicankustemur.login.model.User;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final JDBC_Dao dao;
+	private UserValidator userValidator;
 	private String forward = null;
 	private final String LOGIN = "index.jsp";
 	private final String USERLIST = "controller";
@@ -49,7 +51,8 @@ public class Login extends HttpServlet {
 		int count = 0;
 
 		if (request.getParameter("signin") != null) {
-			switch (dao.validate(userName, userPass)) {
+			userValidator = new UserValidator();
+			switch (userValidator.validate(userName, userPass)) {
 			case "admin":
 				forward = USERLIST;
 				request.getSession().setAttribute("userlogin", userName);
@@ -66,7 +69,7 @@ public class Login extends HttpServlet {
 				break;
 			}
 
-			final ArrayList<User> users = dao.getAllUsers();
+			final List<User> users = dao.getAllUsers();
 			for (final User user : users) {
 				++count;
 			}

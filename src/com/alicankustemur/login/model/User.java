@@ -7,7 +7,7 @@ package com.alicankustemur.login.model;
  * @Blog : https://kustemura.blogspot.com.tr
  */
 public class User {
-	private int userId;
+	private long userId;
 	private String userName;
 	private String userPass;
 	private int userAuthority;
@@ -16,11 +16,11 @@ public class User {
 
 	}
 
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(final int userId) {
+	public void setUserId(final long userId) {
 		this.userId = userId;
 	}
 

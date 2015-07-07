@@ -1,7 +1,7 @@
 package com.alicankustemur.login.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,7 +60,7 @@ public class Controller extends HttpServlet {
 				otherMessage = "Tüm alanlarý doldurunuz.";
 			} else {
 				int count = 0;
-				final ArrayList<User> allUsers = controller.getAllUsers();
+				final List<User> allUsers = controller.getAllUsers();
 				for (final User defaultUser : allUsers) {
 					if (userName.equals(defaultUser.getUserName())) {
 						count++;
@@ -74,7 +74,7 @@ public class Controller extends HttpServlet {
 					controller.createUser(user);
 					submit = "create";
 
-					otherMessage += userName + " adlý ";
+					otherMessage = userName + " adlý ";
 					if (user.getUserAuthority() == 1) {
 						otherMessage += "yetkili";
 					} else {
@@ -82,9 +82,9 @@ public class Controller extends HttpServlet {
 					}
 					otherMessage += " baþarýyla eklendi.";
 				} else {
-					otherMessage += "test";
+					otherMessage = userName
+							+ " adlý bir kullanýcý zaten mevcut.";
 				}
-				otherMessage = userName + " adlý bir kullanýcý zaten mevcut.";
 
 			}
 
