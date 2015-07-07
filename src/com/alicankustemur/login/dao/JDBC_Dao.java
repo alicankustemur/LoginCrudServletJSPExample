@@ -28,6 +28,7 @@ public class JDBC_Dao implements DAO {
 
 	@Override
 	public void createUser(final User user) {
+
 		try {
 			preparedStatement = connection
 					.prepareStatement("INSERT INTO users (user_name,user_pass,user_authority) VALUES (?,?,?)");

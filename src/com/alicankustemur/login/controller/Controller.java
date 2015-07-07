@@ -1,6 +1,7 @@
 package com.alicankustemur.login.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -58,19 +59,33 @@ public class Controller extends HttpServlet {
 			if (userName == "" || userPass == "") {
 				otherMessage = "Tüm alanlarý doldurunuz.";
 			} else {
-				userAuthority = Integer.parseInt(request
-						.getParameter("user_authority"));
-				user = new User(userName, userPass, userAuthority);
-				controller.createUser(user);
-				submit = "create";
-
-				otherMessage = userName + " adlý ";
-				if (user.getUserAuthority() == 1) {
-					otherMessage += "yetkili";
-				} else {
-					otherMessage += "kullanýcý";
+				int count = 0;
+				final ArrayList<User> allUsers = controller.getAllUsers();
+				for (final User defaultUser : allUsers) {
+					if (userName.equals(defaultUser.getUserName())) {
+						count++;
+					}
 				}
-				otherMessage += " baþarýyla eklendi.";
+
+				if (count < 1) {
+					userAuthority = Integer.parseInt(request
+							.getParameter("user_authority"));
+					user = new User(userName, userPass, userAuthority);
+					controller.createUser(user);
+					submit = "create";
+
+					otherMessage += userName + " adlý ";
+					if (user.getUserAuthority() == 1) {
+						otherMessage += "yetkili";
+					} else {
+						otherMessage += "kullanýcý";
+					}
+					otherMessage += " baþarýyla eklendi.";
+				} else {
+					otherMessage += "test";
+				}
+				otherMessage = userName + " adlý bir kullanýcý zaten mevcut.";
+
 			}
 
 		}
