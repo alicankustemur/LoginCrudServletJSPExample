@@ -7,6 +7,12 @@ import java.util.Properties;
 
 import com.alicankustemur.login.dao.JDBC_Dao;
 
+/**
+ * @Author : Ali Can Kuþtemur
+ * @Date : 7 Tem 2015
+ * @File : DatabaseUtil.java
+ * @Blog : https://kustemura.blogspot.com.tr
+ */
 public class DatabaseUtil {
 	private static Connection connection = null;
 

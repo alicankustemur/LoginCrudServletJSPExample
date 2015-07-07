@@ -8,6 +8,12 @@ import java.sql.SQLException;
 import com.alicankustemur.login.model.User;
 import com.alicankustemur.login.util.DatabaseUtil;
 
+/**
+ * @Author : Ali Can Kuþtemur
+ * @Date : 7 Tem 2015
+ * @File : UserValidator.java
+ * @Blog : https://kustemura.blogspot.com.tr
+ */
 public class UserValidator {
 	private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
