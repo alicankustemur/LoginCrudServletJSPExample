@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.alicankustemur.login.model.User;
+import com.alicankustemur.login.service.UserService;
 import com.alicankustemur.login.util.DatabaseUtil;
 
 /**
- * @Author : Ali Can Kuþtemur
+ * @Author : Ali Can Kuï¿½temur
  * @Date : 7 Tem 2015
  * @File : UserValidator.java
  * @Blog : https://kustemura.blogspot.com.tr
@@ -18,7 +19,6 @@ public class UserValidator {
 	private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-	private ApplicationController controller;
 
 	public String validate(final String userName, final String userPass) {
 		String state = null;
