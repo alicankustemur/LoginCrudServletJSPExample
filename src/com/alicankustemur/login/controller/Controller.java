@@ -1,4 +1,4 @@
-package com.alicankustemur.login.controller;
+package com.alicankustemur.login.userService;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,22 +11,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alicankustemur.login.dao.JDBC_Dao;
 import com.alicankustemur.login.model.User;
+import com.alicankustemur.login.service.UserService;
 
 /**
- * @Author : Ali Can Kuþtemur
+ * @Author : Ali Can Kuï¿½temur
  * @Date : 7 Tem 2015
- * @File : Controller.java
+ * @File : userService.java
  * @Blog : https://kustemura.blogspot.com.tr
  */
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final ApplicationController controller;
+	private final UserService userService;
 	private static String getFullURL = "http://localhost:8080/LoginCrudServletJSPExample/";
 
-	public Controller() {
-		super();
-		controller = new ApplicationController(new JDBC_Dao());
+	public userService() {
+		userService = new UserService(new JDBC_Dao());
 	}
 
 	@Override
@@ -57,10 +57,10 @@ public class Controller extends HttpServlet {
 		if (request.getParameter("user_add") != null) {
 
 			if (userName == "" || userPass == "") {
-				otherMessage = "Tüm alanlarý doldurunuz.";
+				otherMessage = "Tï¿½m alanlarï¿½ doldurunuz.";
 			} else {
 				int count = 0;
-				final List<User> allUsers = controller.getAllUsers();
+				final List<User> allUsers = userService.getAllUsers();
 				for (final User defaultUser : allUsers) {
 					if (userName.equals(defaultUser.getUserName())) {
 						count++;
@@ -71,19 +71,19 @@ public class Controller extends HttpServlet {
 					userAuthority = Integer.parseInt(request
 							.getParameter("user_authority"));
 					user = new User(userName, userPass, userAuthority);
-					controller.createUser(user);
+					userService.createUser(user);
 					submit = "create";
 
-					otherMessage = userName + " adlý ";
+					otherMessage = userName + " adlï¿½ ";
 					if (user.getUserAuthority() == 1) {
 						otherMessage += "yetkili";
 					} else {
-						otherMessage += "kullanýcý";
+						otherMessage += "kullanï¿½cï¿½";
 					}
-					otherMessage += " baþarýyla eklendi.";
+					otherMessage += " baï¿½arï¿½yla eklendi.";
 				} else {
 					otherMessage = userName
-							+ " adlý bir kullanýcý zaten mevcut.";
+							+ " adlï¿½ bir kullanï¿½cï¿½ zaten mevcut.";
 				}
 
 			}
@@ -97,7 +97,7 @@ public class Controller extends HttpServlet {
 				userId = Integer.parseInt(request.getParameter("userid"));
 				userAuthority = Integer.parseInt(request
 						.getParameter("user_authority"));
-				final User updatedUser = controller.getUserById(userId);
+				final User updatedUser = userService.getUserById(userId);
 				request.setAttribute("userid", userId);
 				request.setAttribute("username", updatedUser.getUserName());
 				request.setAttribute("userauthority",
@@ -105,40 +105,40 @@ public class Controller extends HttpServlet {
 				if (request.getParameter("user_update") != null) {
 					redirect = "update";
 					if (userName == "") {
-						otherMessage = "Lütfen bir kullanýcý adý giriniz.";
+						otherMessage = "Lï¿½tfen bir kullanï¿½cï¿½ adï¿½ giriniz.";
 					} else if (userPass == "") {
 
 						User userP = new User();
-						userP = controller.getUserById(userId);
+						userP = userService.getUserById(userId);
 						userPass = userP.getUserPass();
 						user = new User(userName, userPass, userAuthority);
-						controller.updateUser(user, userId);
+						userService.updateUser(user, userId);
 
-						otherMessage = "Sadece kullanýcý adý güncellenmiþtir , eski þifre geçerlidir.";
+						otherMessage = "Sadece kullanï¿½cï¿½ adï¿½ gï¿½ncellenmiï¿½tir , eski ï¿½ifre geï¿½erlidir.";
 
 					} else if (userName != "" && userPass != "") {
 
 						user = new User(userName, userPass, userAuthority);
-						controller.updateUser(user, userId);
-						otherMessage = updatedUser.getUserName() + " adlý ";
+						userService.updateUser(user, userId);
+						otherMessage = updatedUser.getUserName() + " adlï¿½ ";
 						if (updatedUser.getUserAuthority() == 1) {
 							otherMessage += "yetkili";
 						} else {
-							otherMessage += "kullanýcý";
+							otherMessage += "kullanï¿½cï¿½";
 						}
-						otherMessage += " baþarýyla güncellendi.";
+						otherMessage += " baï¿½arï¿½yla gï¿½ncellendi.";
 
 					}
 
 				} else {
-					otherMessage = "Þifre boþ geçildiði takdirde , eski þifre geçerli olucaktýr.";
+					otherMessage = "ï¿½ifre boï¿½ geï¿½ildiï¿½i takdirde , eski ï¿½ifre geï¿½erli olucaktï¿½r.";
 				}
 
 			} else if (crud.equals("delete")) {
 				redirect = "delete";
 				submit = "create";
 				userId = Integer.parseInt(request.getParameter("userid"));
-				controller.deleteUser(userId);
+				userService.deleteUser(userId);
 			}
 
 		}
@@ -147,13 +147,13 @@ public class Controller extends HttpServlet {
 			request.getSession().invalidate();
 			response.sendRedirect(getFullURL);
 		} else if (request.getParameter("cancel") != null) {
-			response.sendRedirect(getFullURL + "controller");
+			response.sendRedirect(getFullURL + "userService");
 		} else {
 
 			request.setAttribute("submit", submit);
 			request.setAttribute("otherMessage", otherMessage);
 			request.setAttribute("redirect", redirect);
-			request.setAttribute("users", controller.getAllUsers());
+			request.setAttribute("users", userService.getAllUsers());
 			request.getRequestDispatcher("login/login.jsp").forward(request,
 					response);
 		}
